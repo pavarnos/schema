@@ -35,8 +35,8 @@ abstract class Column
      */
     public function __construct($name, $description = '', $allowNull = false)
     {
-        $this->name        = $name;
-        $this->description = $description;
+        $this->name        = trim($name);
+        $this->description = trim($description);
         $this->allowNull   = $allowNull;
     }
 

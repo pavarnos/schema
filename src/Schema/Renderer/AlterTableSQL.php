@@ -126,8 +126,9 @@ class AlterTableSQL
             Schema::quoteIdentifier($master->getColumnNumber($masterColumnNumber - 1)->getName()));
 
         return 'alter table ' . Schema::quoteIdentifier($master->getName())
-        . ' add column ' . $location . ' '
-        . $master->getColumnNumber($masterColumnNumber)->toSQL();
+        . ' add column '
+        . $master->getColumnNumber($masterColumnNumber)->toSQL()
+        . ' ' . $location;
     }
 
 

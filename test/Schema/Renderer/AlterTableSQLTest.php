@@ -23,11 +23,11 @@ class AlterTableSQLTest extends \PHPUnit_Framework_TestCase
         $subject = new AlterTableSQL();
         $sql     = $subject->addColumn($table, 0); // add it as the first column
         $this->assertEquals('alter table ' . Schema::quoteIdentifier('one')
-            . ' add column first ' . $col1->toSQL(), $sql );
+            . ' add column ' . $col1->toSQL() . ' first', $sql );
 
         $sql     = $subject->addColumn($table, 1); // a second or later column
         $this->assertEquals('alter table ' . Schema::quoteIdentifier('one')
-            . ' add column after ' . Schema::quoteIdentifier($name) . ' ' . $col2->toSQL(), $sql );
+            . ' add column ' . $col2->toSQL() . ' after ' . Schema::quoteIdentifier($name), $sql );
     }
 
 
@@ -111,7 +111,8 @@ class AlterTableSQLTest extends \PHPUnit_Framework_TestCase
         $subject = new AlterTableSQL();
         $sql = $subject->compareTableColumns($master, $copy);
         $this->assertEquals(1, count($sql));
-        $this->assertStringStartsWith('alter table ' . Schema::quoteIdentifier('the_table') . ' add column first ', $sql[0]);
+        $this->assertStringStartsWith('alter table ' . Schema::quoteIdentifier('the_table') . ' add column ', $sql[0]);
+        $this->assertStringEndsWith(' first', $sql[0]);
     }
 
 
@@ -127,7 +128,8 @@ class AlterTableSQLTest extends \PHPUnit_Framework_TestCase
         $subject = new AlterTableSQL();
         $sql = $subject->compareTableColumns($master, $copy);
         $this->assertEquals(1, count($sql));
-        $this->assertStringStartsWith('alter table ' . Schema::quoteIdentifier('the_table') . ' add column after ' . Schema::quoteIdentifier($col1), $sql[0]);
+        $this->assertStringStartsWith('alter table ' . Schema::quoteIdentifier('the_table') . ' add column ', $sql[0]);
+        $this->assertStringEndsWith(' after ' . Schema::quoteIdentifier($col1), $sql[0]);
     }
 
 
@@ -159,7 +161,8 @@ class AlterTableSQLTest extends \PHPUnit_Framework_TestCase
         $subject = new AlterTableSQL();
         $sql = $subject->compareTableColumns($master, $copy);
         $this->assertEquals(1, count($sql));
-        $this->assertStringStartsWith('alter table ' . Schema::quoteIdentifier('the_table') . ' add column after ' . Schema::quoteIdentifier($col2), $sql[0]);
+        $this->assertStringStartsWith('alter table ' . Schema::quoteIdentifier('the_table') . ' add column ', $sql[0]);
+        $this->assertStringEndsWith(' after ' . Schema::quoteIdentifier($col2), $sql[0]);
     }
 
 
@@ -186,10 +189,12 @@ class AlterTableSQLTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(6, count($sql));
         $this->assertStringStartsWith('alter table ' . Schema::quoteIdentifier('the_table') . ' change ' . Schema::quoteIdentifier($col1), $sql[0]);
         $this->assertStringStartsWith('alter table ' . Schema::quoteIdentifier('the_table') . ' drop column ' . Schema::quoteIdentifier($col2), $sql[1]);
-        $this->assertStringStartsWith('alter table ' . Schema::quoteIdentifier('the_table') . ' add column after ' . Schema::quoteIdentifier($col3) . ' ' . Schema::quoteIdentifier($col3a), $sql[2]);
+        $this->assertStringStartsWith('alter table ' . Schema::quoteIdentifier('the_table') . ' add column ' . Schema::quoteIdentifier($col3a), $sql[2]);
+        $this->assertStringEndsWith(' after ' . Schema::quoteIdentifier($col3), $sql[2]);
         $this->assertStringStartsWith('alter table ' . Schema::quoteIdentifier('the_table') . ' change ' . Schema::quoteIdentifier($col5), $sql[3]);
         $this->assertStringStartsWith('alter table ' . Schema::quoteIdentifier('the_table') . ' drop column ' . Schema::quoteIdentifier($col4), $sql[4]);
-        $this->assertStringStartsWith('alter table ' . Schema::quoteIdentifier('the_table') . ' add column after ' . Schema::quoteIdentifier($col5) . ' ' . Schema::quoteIdentifier($col6), $sql[5]);
+        $this->assertStringStartsWith('alter table ' . Schema::quoteIdentifier('the_table') . ' add column ' . Schema::quoteIdentifier($col6), $sql[5]);
+        $this->assertStringEndsWith(' after ' . Schema::quoteIdentifier($col5), $sql[5]);
     }
 
 

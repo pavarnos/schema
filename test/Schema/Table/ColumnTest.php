@@ -41,6 +41,14 @@ class ColumnTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    public function testConstructorWithSpaces()
+    {
+        $subject = $this->getSubject($name = ' abc  ', $desc = ' def   ', $allowNull = false);
+        $this->assertEquals('abc', $subject->getName());
+        $this->assertEquals('def', $subject->getDescription());
+    }
+
+
     public function testCompareTo()
     {
         $a = new Schema\Table\Column\String($name = 'abc');
