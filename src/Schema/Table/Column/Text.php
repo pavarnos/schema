@@ -31,6 +31,12 @@ class Text extends Column
     }
 
 
+    public function getSQLDefault()
+    {
+        return 'default \'\'';
+    }
+
+
     /**
      * @return string
      */

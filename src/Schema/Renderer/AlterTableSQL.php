@@ -201,8 +201,8 @@ class AlterTableSQL
         // indexes in both will be compared: if any change, they will be dropped and re-created
         foreach (array_intersect($masterIndexes, $copyIndexes) as $name) {
             if ($master->getIndexByName($name)->toSQL() == $copy->getIndexByName($name)->toSQL()) {
-                continue;
-            } // match OK: do nothing
+                continue; // match OK: do nothing
+            }
 
             $sql[] = 'alter table ' . Schema::quoteIdentifier($copy->getName())
                 . ' drop index ' . Schema::quoteIdentifier($name);

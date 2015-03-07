@@ -198,12 +198,12 @@ class AlterTableSQLTest extends \PHPUnit_Framework_TestCase
      */
     public function testRender()
     {
-        $masterOne = new Table('one');
+        $masterOne = new Table('one', 'my comment');
         $masterOne->addColumn(new Column\PrimaryKey($col1_1 = 'id', $desc1_1 = 'the key'));
         $masterTwo = new Table('two');
         $masterTwo->addColumn(new Column\PrimaryKey($col2_1 = 'id', $desc2_1 = 'the key'));
         $masterTwo->addColumn(new Column\String($col2_2 = 'c2', $desc2_2 = 'column 2'));
-        $masterTwo->addIndex(new Index($col2_2));
+        $masterTwo->addIndex(new Index\Unique($col2_2));
         $master = new Schema();
         $master->add($masterOne);
         $master->add($masterTwo);
@@ -226,6 +226,6 @@ class AlterTableSQLTest extends \PHPUnit_Framework_TestCase
         $this->assertStringStartsWith('create table ' . Schema::quoteIdentifier('one'), $sql[0]);
         $this->assertStringStartsWith('drop table ' . Schema::quoteIdentifier('three'), $sql[1]);
         $this->assertStringStartsWith('alter table ' . Schema::quoteIdentifier('two') . ' change ' . Schema::quoteIdentifier($col2_2), $sql[2]);
-        $this->assertStringStartsWith('alter table ' . Schema::quoteIdentifier('two') . ' add key ' . Schema::quoteIdentifier($col2_2), $sql[3]);
+        $this->assertStringStartsWith('alter table ' . Schema::quoteIdentifier('two') . ' add unique key ' . Schema::quoteIdentifier($col2_2), $sql[3]);
     }
 }
