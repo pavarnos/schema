@@ -41,4 +41,21 @@ class Integer extends Column
     {
         return 'default \'0\'';
     }
+
+
+    /**
+     * @return string
+     */
+    public function getSize()
+    {
+        return $this->size;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDigits()
+    {
+        return $this->digits;
+    }
 }

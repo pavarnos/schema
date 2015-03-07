@@ -52,12 +52,13 @@ class ParserTest extends \PHPUnit_Framework_TestCase
     {
         $sql = "
           `Name` varchar(40) not null default '' comment 'hi there',
-          `Description` mediumtext not null";
+          `Description` mediumtext not null,
+          `MyBoolean` tinyint(4) not null default \'0\'";
 
         $subject = new Parser();
         $table = new Table( 'x' );
         $table = $subject->parseColumns( $table, $sql );
-        $this->assertEquals( $table->getColumnCount(), 2 );
+        $this->assertEquals( $table->getColumnCount(), 3 );
 
         $one = $table->getColumnByName('Name');
         $this->assertEquals('Name', $one->getName());
@@ -70,6 +71,13 @@ class ParserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('', $two->getDescription());
         $this->assertInstanceOf('LSS\Schema\Table\Column\Text', $two);
         $this->assertEquals('medium', $two->getSize());
+
+        $three = $table->getColumnByName('MyBoolean');
+        $this->assertEquals('MyBoolean', $three->getName());
+        $this->assertEquals('', $three->getDescription());
+        $this->assertInstanceOf('LSS\Schema\Table\Column\Boolean', $three);
+        $this->assertEquals('tiny', $three->getSize());
+        $this->assertEquals(4, $three->getDigits());
     }
 
 
