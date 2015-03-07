@@ -85,7 +85,14 @@ abstract class Column
 
     public function toSQL()
     {
-        $sql = Schema::quoteIdentifier($this->getName()) . ' ' . $this->getSQLType() . ($this->allowNull ? '' : ' not null ') . $this->getSQLDefault();
+        $sql = Schema::quoteIdentifier($this->getName()) . ' ' . $this->getSQLType();
+        if (!$this->allowNull) {
+            $sql .= ' not null';
+        }
+        $default = $this->getSQLDefault();
+        if (!empty($default)) {
+            $sql .= ' ' . $default;
+        }
         if ($this->description != '')
         {
             $sql .= ' comment ' . Schema::quoteDescription( $this->getDescription() );

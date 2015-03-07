@@ -37,7 +37,7 @@ class ColumnTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($name, $subject->getName());
         $this->assertEquals($desc, $subject->getDescription());
         $this->assertNotEmpty($subject->getNullSQL());
-        $this->assertEquals(Schema::BACKTICK . $name . Schema::BACKTICK . ' ' . self::SQLTYPE . ' not null  comment ' . Schema::QUOTE . $desc . Schema::QUOTE, $subject->toSQL());
+        $this->assertEquals(Schema::BACKTICK . $name . Schema::BACKTICK . ' ' . self::SQLTYPE . ' not null comment ' . Schema::QUOTE . $desc . Schema::QUOTE, $subject->toSQL());
     }
 
 

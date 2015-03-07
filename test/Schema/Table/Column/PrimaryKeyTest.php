@@ -16,6 +16,6 @@ class PrimaryKeyTest extends \PHPUnit_Framework_TestCase
         $subject = new PrimaryKey($name = 'abc', $desc = 'def');
         $this->assertEquals($name, $subject->getName());
         $this->assertEquals($desc, $subject->getDescription());
-        $this->assertEquals(Schema::quoteIdentifier($name) . ' ' . $subject::DEFAULT_SIZE . 'int(' . $subject::DEFAULT_DIGITS . ') auto_increment not null  comment ' . Schema::QUOTE . $desc . Schema::QUOTE, $subject->toSQL());
+        $this->assertEquals(Schema::quoteIdentifier($name) . ' ' . $subject::DEFAULT_SIZE . 'int(' . $subject::DEFAULT_DIGITS . ') auto_increment not null comment ' . Schema::QUOTE . $desc . Schema::QUOTE, $subject->toSQL());
     }
 }

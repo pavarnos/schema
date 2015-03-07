@@ -49,12 +49,11 @@ class ColumnFactory
      */
     public function create($name, $description, $sqlType)
     {
-        $sqlType = strtolower($sqlType);
         foreach ($this->map as $regex => $className) {
             if (!preg_match('/' . $regex . '/i', $sqlType, $matches)) {
                 continue;
             }
-            $allowNull = strpos($sqlType, ' not null') === false;
+            $allowNull = stripos($sqlType, ' not null') === false;
 
             $instance = new $className($name, $description, $allowNull,
                 isset($matches[1]) ? $matches[1] : null,
