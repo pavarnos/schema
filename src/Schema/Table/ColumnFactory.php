@@ -14,14 +14,14 @@ class ColumnFactory
 {
     // maps sql type regex to class names
     private $map = [
-        '([\a-z]*)int\(([\d]+)\) not null auto_increment' => '\LSS\Schema\Table\Column\PrimaryKey',
+        '([a-z]*)int\(([\d]+)\) not null auto_increment' => '\LSS\Schema\Table\Column\PrimaryKey',
         'tinyint\(([\d]+)\)'                              => '\LSS\Schema\Table\Column\Boolean',
-        '([\a-z]*)int\(([\d]+)\)'                         => '\LSS\Schema\Table\Column\Integer',
-        '([\a-z]*)text'                                   => '\LSS\Schema\Table\Column\Text',
+        '([a-z]*)int\(([\d]+)\)'                         => '\LSS\Schema\Table\Column\Integer',
+        '([a-z]*)text'                                   => '\LSS\Schema\Table\Column\Text',
         'datetime'                                        => '\LSS\Schema\Table\Column\DateTime',
         'date'                                            => '\LSS\Schema\Table\Column\Date',
         'varchar\s*\((\d+)\)'                             => '\LSS\Schema\Table\Column\String',
-        'enum\s*\(\s*(.*)\s*\) '                          => '\LSS\Schema\Table\Column\Enumeration',
+        'enum\s*\(\s*([^\)]*)\s*\) '                      => '\LSS\Schema\Table\Column\Enumeration',
         'set\s*\(\s*(.*)\s*\) '                           => '\LSS\Schema\Table\Column\Set',
         'decimal\s*\(\s*(\d+)\s*,\s*(\d+)\s*\)'           => '\LSS\Schema\Table\Column\Float',
     ];
@@ -50,7 +50,7 @@ class ColumnFactory
     public function create($name, $description, $sqlType)
     {
         foreach ($this->map as $regex => $className) {
-            if (!preg_match('/' . $regex . '/i', $sqlType, $matches)) {
+            if (!preg_match('/^' . $regex . '/i', $sqlType, $matches)) {
                 continue;
             }
             $allowNull = stripos($sqlType, ' not null') === false;

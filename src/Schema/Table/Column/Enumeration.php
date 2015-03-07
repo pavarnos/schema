@@ -56,4 +56,13 @@ class Enumeration extends Column
 
         return 'default ' . Schema::quoteEnumValue($default);
     }
+
+
+    /**
+     * @return array
+     */
+    public function getValues()
+    {
+        return $this->values;
+    }
 }
