@@ -5,7 +5,7 @@
  * @date    March 2015
  */
 
-namespace LSS\Schema\Table\Renderer;
+namespace LSS\Schema\Renderer;
 
 use LSS\Schema;
 

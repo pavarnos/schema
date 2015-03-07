@@ -48,7 +48,6 @@ class Parser
      */
     public function parse(Schema $schema, $sql)
     {
-        $sql    = $this->lowercaseKeyWords($sql);
         $tables = preg_split('/;[\r\n]/ms', $sql, -1, PREG_SPLIT_NO_EMPTY);
         foreach ($tables as $tableSQL) {
             $tableSQL = trim($tableSQL);
@@ -63,20 +62,6 @@ class Parser
     }
 
 
-    /**
-     * lower cases all the sql keywords we care about
-     * @param string $sql to convert
-     * @return string lower-cased sql
-     */
-    public function lowercaseKeyWords($sql)
-    {
-        $keywords = array( ' not null', ' varchar', ' mediumint', ' int' );
-
-        return str_ireplace($keywords, $keywords, $sql);
-    }
-
-
-    //-------------------------------------------------------------------------
     /**
      * assumes each column is on its own line, with the CREATE TABLE and
      * table type info also on their own lines, as returned by MySQL
@@ -113,38 +98,38 @@ class Parser
     public function parseColumns(Table $table, $columnText)
     {
         // remove stuff we don't want to parse or don't currently care about
-        $columnText = preg_replace("/\s+default\s*\'\'/ims", '', $columnText);
-        $columnText = preg_replace("/\s+default\s*\'[-0:. ]+\'/ims", '', $columnText);
+        $columnText = preg_replace('/\s+default\s*\'\'/ims', '', $columnText);
+        $columnText = preg_replace('/\s+default\s*\'[-0:. ]+\'/ims', '', $columnText);
         // later: add charset stuff in here
 
         $columns = preg_split('/[\r\n]+\s*/m', $columnText, -1, PREG_SPLIT_NO_EMPTY);
         foreach ($columns as $column) {
             $column  = $this->removeTrailingComma($column);
             $comment = $this->extractComment($column);
-            $column  = preg_replace("/\s+comment\s*'.*'/im", '', $column); // snip off the comment
+            $column  = preg_replace('/\s+comment\s*\'.*\'/im', '', $column); // snip off the comment
 
-            if (preg_match("/^PRIMARY\s+KEY\s+\(\s*(.*)\s*\)/im", $column, $fields)) {
+            if (preg_match('/^PRIMARY\s+KEY\s+\(\s*(.*)\s*\)/im', $column, $fields)) {
                 assert(strpos(',', $fields[1]) === false); // known limitation: single field primary key
                 $table->addIndex(new Index\Primary(Schema::unQuote(trim($fields[1]))));
-            } else if (preg_match("/^UNIQUE KEY\s+(.*)\s+\(\s*([^\s]+)(?:\s*,\s*([^\s]+))*\s*\)/im", $column, $fields)) {
+            } else if (preg_match('/^UNIQUE KEY\s+(.*)\s+\(\s*([^\s]+)(?:\s*,\s*([^\s]+))*\s*\)/im', $column, $fields)) {
                 array_shift($fields); // delete $fields[0] coz it is the whole string
                 $fields = array_map('LSS\Schema::unQuote', $fields);
                 $name   = array_shift($fields);
                 $table->addIndex(new Index\Unique($name, $fields));
-            } else if (preg_match("/^FULLTEXT KEY\s+(.*)\s+\(\s*([^\s]+)(?:\s*,\s*([^\s]+))*\s*\)/im", $column,
+            } else if (preg_match('/^FULLTEXT KEY\s+(.*)\s+\(\s*([^\s]+)(?:\s*,\s*([^\s]+))*\s*\)/im', $column,
                 $fields)) {
                 array_shift($fields); // delete $fields[0] coz it is the whole string
                 $fields = array_map('LSS\Schema::unQuote', $fields);
                 $name   = array_shift($fields);
                 $table->addIndex(new Index($name, $fields, 'fulltext'));
-            } else if (preg_match("/^KEY\s+(.*)\s+\(\s*([^\s]+)(?:\s*,\s*([^\s]+))*\s*\)/im", $column, $fields)) {
+            } else if (preg_match('/^KEY\s+(.*)\s+\(\s*([^\s]+)(?:\s*,\s*([^\s]+))*\s*\)/im', $column, $fields)) {
                 array_shift($fields); // delete $fields[0] coz it is the whole string
                 $fields = array_map('LSS\Schema::unQuote', $fields);
                 $name   = array_shift($fields);
                 $table->addIndex(new Index($name, $fields));
             } else {
                 // ordinary field: name is first word (optionally quoted), data type is rest of string
-                preg_match("/^([^\s]+)\s+(.*)\s*/", $column, $matches);
+                preg_match('/^([^\s]+)\s+(.*)\s*/', $column, $matches);
                 $name = Schema::unQuote($matches[1]);
                 $table->addColumn($this->columnFactory->create($name, $comment, $matches[2]));
             }

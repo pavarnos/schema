@@ -15,7 +15,7 @@ use LSS\Schema;
  */
 class Unique extends Index
 {
-    public function __construct($name, $columns = [ ], $type = 'UNIQUE')
+    public function __construct($name, $columns = [ ], $type = 'unique')
     {
         parent::__construct($name, $columns, $type);
     }

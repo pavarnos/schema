@@ -48,7 +48,7 @@ class ColumnTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($a::NOT_EQUAL, $a->compareTo(new Schema\Table\Column\String($name . 'x')), 'name is different');
         $this->assertEquals($a::PARTIAL_MATCH, $a->compareTo(new Schema\Table\Column\String($name, 'def')), 'description is different');
         $this->assertEquals($a::PARTIAL_MATCH, $a->compareTo($this->getSubject($name, '')), 'because type is different');
-        $this->assertEquals($a::NOT_EQUAL, $a->compareTo($this->getSubject($name, 'def')), 'because more than one thing is different');
+        $this->assertEquals($a::NOT_EQUAL, $a->compareTo($this->getSubject($name, 'def')), 'name is different: cannot assume same just because they have the same type');
         $this->assertEquals($a::NOT_EQUAL, $a->compareTo($this->getSubject($name . 'x', '')), 'because more than one thing is different');
     }
 }

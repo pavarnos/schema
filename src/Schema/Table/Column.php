@@ -95,35 +95,38 @@ abstract class Column
 
 
     /**
-     * @param Column $b
+     * @param Column $other
      * @return int Column::EQUAL if the columns are an exact match,
      * | Column::NOT_EQUAL if nothing matches
      * | Column::PARTIAL_MATCH if enough matches that we can assume it was updated
      */
-    public function compareTo($b)
+    public function compareTo($other)
     {
-        if ($this->description == '' && $b->description == '') {
+        if ($this->description == '' && $other->description == '') {
             // if no description, can change type only
-            if ($this->name != $b->name) {
+            if ($this->name != $other->name) {
                 return self::NOT_EQUAL;
             }
 
-            return $this->getSQLType() == $b->getSQLType() ? self::EQUAL : self::PARTIAL_MATCH;
+            return $this->getSQLType() == $other->getSQLType() ? self::EQUAL : self::PARTIAL_MATCH;
         }
 
-        // can change any one of (name, type, description)
-        if ($this->name == $b->name) {
-            if ($this->getSQLType() != $b->getSQLType()) {
-                return $this->description == $b->description ? self::PARTIAL_MATCH : self::NOT_EQUAL;
+        if ($this->name == $other->name) {
+            if ($this->getSQLType() != $other->getSQLType()) {
+                return $this->description == $other->description ? self::PARTIAL_MATCH : self::NOT_EQUAL;
             }
 
-            return $this->description == $b->description ? self::EQUAL : self::PARTIAL_MATCH;
+            return $this->description == $other->description ? self::EQUAL : self::PARTIAL_MATCH;
         } else {
-            if ($this->getSQLType() != $b->getSQLType()) {
+            if ($this->getSQLType() != $other->getSQLType()) {
+                // its tempting to allow a difference in description to generate a partial match,
+                // but if you do this a sequence of columns of the same type will all get altered
+                // and it becomes impossible to add a new column at the start of the table
                 return self::NOT_EQUAL;
+//                return $this->description == $other->description ? self::PARTIAL_MATCH : self::NOT_EQUAL;
             }
 
-            return $this->description == $b->description ? self::PARTIAL_MATCH : self::NOT_EQUAL;
+            return $this->description == $other->description ? self::PARTIAL_MATCH : self::NOT_EQUAL;
         }
     }
 }

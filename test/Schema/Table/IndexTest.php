@@ -15,7 +15,16 @@ class IndexTest extends \PHPUnit_Framework_TestCase
     {
         $subject = new Index($name = 'abc', $columns = [ $one = 'a', $two = 'cc' ], $type = 'TheType');
         $this->assertEquals($name, $subject->getName());
-        $this->assertEquals($type . ' KEY ' . Schema::quoteIdentifier($name)
-            . ' (' . Schema::quoteEnumValue($one) . ',' . Schema::quoteEnumValue($two) . ')', $subject->toSQL());
+        $this->assertEquals($type . ' key ' . Schema::quoteIdentifier($name)
+            . ' (' . Schema::quoteIdentifier($one) . ',' . Schema::quoteIdentifier($two) . ')', $subject->toSQL());
+    }
+
+
+    public function testConstructor2()
+    {
+        $subject = new Index($name = 'abc');
+        $this->assertEquals($name, $subject->getName());
+        $this->assertEquals('key ' . Schema::quoteIdentifier($name)
+            . ' (' . Schema::quoteIdentifier($name) . ')', $subject->toSQL());
     }
 }

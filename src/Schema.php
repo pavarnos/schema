@@ -25,10 +25,6 @@ use LSS\Schema\Table;
  *           ->addLastModifiedColumn ();
  *   }
  *
- * Known limitations
- * - cannot have a ; in a table or field comment
- * - does not handle the meta stuff at the end of the table eg type, encoding etc
- * - expects a single integer primary key index field first in the table
  */
 class Schema implements \IteratorAggregate
 {
@@ -75,7 +71,16 @@ class Schema implements \IteratorAggregate
     }
 
 
-    //-------------------------------------------------------------------------
+    /**
+     * names of all the tables
+     * @return string[]
+     */
+    public function getTableNames()
+    {
+        return array_keys($this->table);
+    }
+
+
     /**
      * implements array iteration over tables
      * @return \ArrayIterator

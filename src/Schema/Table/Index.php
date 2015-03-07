@@ -31,6 +31,10 @@ class Index
      */
     public function __construct($name, $columns = [ ], $type = '')
     {
+        if (empty($columns)) {
+            // assume the index is named after the column it indexes
+            $columns[]= $name;
+        }
         $this->name    = $name;
         $this->columns = $columns;
         $this->type    = $type;
@@ -51,13 +55,13 @@ class Index
      */
     public function toSQL()
     {
-        return trim($this->type . ' KEY ' . Schema::quoteIdentifier($this->getName())
-            . ' (' . join(',', array_map('LSS\Schema::quoteEnumValue', $this->columns)) . ')');
+        return trim($this->type . ' key ' . Schema::quoteIdentifier($this->getName())
+            . ' (' . join(',', array_map('LSS\Schema::quoteIdentifier', $this->columns)) . ')');
     }
 
 
     /**
-     * @return \string[]
+     * @return string[]
      */
     public function getColumns()
     {

@@ -15,8 +15,8 @@ use LSS\Schema;
  */
 class Primary extends Index
 {
-    public function __construct($name, $columns = [ ], $type = '')
+    public function __construct($name, $columns = [ ], $type = 'primary')
     {
-        parent::__construct($name, [$name], 'PRIMARY');
+        parent::__construct($name, [$name], $type);
     }
 }

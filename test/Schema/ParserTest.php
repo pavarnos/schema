@@ -24,12 +24,6 @@ class ParserTest extends \PHPUnit_Framework_TestCase
         ) ENGINE=MyISAM DEFAULT CHARSET=utf8 comment='hi there';";
 
 
-    public function testConstructor()
-    {
-        $this->markTestIncomplete();
-    }
-
-
     public function testRemoveTrailingComma()
     {
         $subject = new Parser();

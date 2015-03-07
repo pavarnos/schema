@@ -7,6 +7,7 @@
 
 namespace LSS\Schema;
 
+use LSS\Schema;
 use LSS\Schema\Table\Column;
 use LSS\Schema\Table\Index;
 
@@ -170,5 +171,46 @@ class Table implements \IteratorAggregate
     public function getIndexCount()
     {
         return count($this->index);
+    }
+
+
+    /**
+     * @return string[]
+     */
+    public function getIndexNames()
+    {
+        return array_keys($this->index);
+    }
+
+
+    /**
+     * render the table as DDL
+     * @param string $newline
+     * @param string $columnSeparator
+     * @return string generated sql
+     */
+    public function toSQL($newline = "\n", $columnSeparator = ",\n")
+    {
+        if ($this->getColumnCount() <= 0) {
+            return '';
+        }
+
+        $items = array();
+        foreach ($this->column as $column) {
+            $items[] = $column->toSQL();
+        }
+        foreach ($this->index as $index) {
+            $items[] = $index->toSQL();
+        }
+
+        $output = 'create table ' . Schema::quoteIdentifier($this->getName()) . ' (' . $newline;
+        $output .= join($columnSeparator, $items) . $newline . ')';
+        if (strlen($this->getDescription()) > 0) {
+            $output .= ' comment=' . Schema::quoteDescription($this->getDescription());
+        }
+        // add Type, encoding etc here
+        // deliberately no ; sql statement separator here: it is added later if needed
+
+        return $output;
     }
 }
