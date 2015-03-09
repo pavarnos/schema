@@ -34,7 +34,7 @@ class Float extends Column
 
     public function getSQLType()
     {
-        return 'float(' . $this->width . ',' . $this->decimalPlaces . ')';
+        return 'decimal(' . $this->width . ',' . $this->decimalPlaces . ')';
     }
 
 
