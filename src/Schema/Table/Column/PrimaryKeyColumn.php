@@ -12,7 +12,7 @@ use LSS\Schema\Table\Column;
 
 /**
  */
-class PrimaryKey extends Integer
+class PrimaryKeyColumn extends IntegerColumn
 {
     const DEFAULT_SIZE = 'medium';
     const DEFAULT_DIGITS = 9;

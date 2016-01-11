@@ -12,7 +12,7 @@ use LSS\Schema\Table\Column;
 
 /**
  */
-class String extends Column
+class StringColumn extends Column
 {
     const DEFAULT_LENGTH = 50;
 

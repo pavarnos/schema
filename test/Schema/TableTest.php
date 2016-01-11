@@ -7,7 +7,7 @@
 
 namespace LSS\Schema;
 
-use LSS\Schema\Table\Column\String;
+use LSS\Schema\Table\Column\StringColumn;
 use LSS\Schema\Table\Index;
 
 class TableTest extends \PHPUnit_Framework_TestCase
@@ -25,7 +25,7 @@ class TableTest extends \PHPUnit_Framework_TestCase
     public function testAddColumn()
     {
         $subject = new Table($name = 'abc', $desc = 'def');
-        $column = new String($colName = 'ghi', $colDesc = 'jkl');
+        $column = new StringColumn($colName = 'ghi', $colDesc = 'jkl');
         $result = $subject->addColumn($column);
         $this->assertEquals($result, $subject, 'to allow fluent adding of many columns');
         $this->assertEquals($column, $subject->getColumnByName($colName));
@@ -33,7 +33,7 @@ class TableTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $subject->getColumnCount());
 
 
-        $column2 = new String($colName2 = 'ghi2', $colDesc2 = 'jkl2');
+        $column2 = new StringColumn($colName2 = 'ghi2', $colDesc2 = 'jkl2');
         $subject->addColumn($column2);
         $this->assertEquals($column2, $subject->getColumnByName($colName2));
         $this->assertEquals($column2, $subject->getColumnNumber(1));

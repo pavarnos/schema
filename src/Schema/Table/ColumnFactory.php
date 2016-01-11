@@ -14,16 +14,16 @@ class ColumnFactory
 {
     // maps sql type regex to class names
     private $map = [
-        '([a-z]*)int\(([\d]+)\) not null auto_increment' => '\LSS\Schema\Table\Column\PrimaryKey',
-        'tinyint\(([\d]+)\)'                              => '\LSS\Schema\Table\Column\Boolean',
-        '([a-z]*)int\(([\d]+)\)'                         => '\LSS\Schema\Table\Column\Integer',
-        '([a-z]*)text'                                   => '\LSS\Schema\Table\Column\Text',
-        'datetime'                                        => '\LSS\Schema\Table\Column\DateTime',
-        'date'                                            => '\LSS\Schema\Table\Column\Date',
-        'varchar\s*\((\d+)\)'                             => '\LSS\Schema\Table\Column\String',
-        'enum\s*\(\s*([^\)]*)\s*\) '                      => '\LSS\Schema\Table\Column\Enumeration',
-        'set\s*\(\s*(.*)\s*\) '                           => '\LSS\Schema\Table\Column\Set',
-        'decimal\s*\(\s*(\d+)\s*,\s*(\d+)\s*\)'           => '\LSS\Schema\Table\Column\Float',
+        '([a-z]*)int\(([\d]+)\) not null auto_increment' => '\LSS\Schema\Table\Column\PrimaryKeyColumn',
+        'tinyint\(([\d]+)\)'                              => '\LSS\Schema\Table\Column\BooleanColumn',
+        '([a-z]*)int\(([\d]+)\)'                         => '\LSS\Schema\Table\Column\IntegerColumn',
+        '([a-z]*)text'                                   => '\LSS\Schema\Table\Column\TextColumn',
+        'datetime'                                        => '\LSS\Schema\Table\Column\DateTimeColumn',
+        'date'                                            => '\LSS\Schema\Table\Column\DateColumn',
+        'varchar\s*\((\d+)\)'                             => '\LSS\Schema\Table\Column\StringColumn',
+        'enum\s*\(\s*([^\)]*)\s*\) '                      => '\LSS\Schema\Table\Column\EnumerationColumn',
+        'set\s*\(\s*(.*)\s*\) '                           => '\LSS\Schema\Table\Column\SetColumn',
+        'decimal\s*\(\s*(\d+)\s*,\s*(\d+)\s*\)'           => '\LSS\Schema\Table\Column\FloatColumn',
     ];
 
 

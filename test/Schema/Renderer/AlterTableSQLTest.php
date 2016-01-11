@@ -17,8 +17,8 @@ class AlterTableSQLTest extends \PHPUnit_Framework_TestCase
     public function testAddColumn()
     {
         $table = new Table('one');
-        $table->addColumn($col1 =new Column\Integer($name = 'c1', $desc = 'my desc', false, $size = 'medium', $digits = 5));
-        $table->addColumn($col2 =new Column\Integer($name2 = 'c2'));
+        $table->addColumn($col1 =new Column\IntegerColumn($name = 'c1', $desc = 'my desc', false, $size = 'medium', $digits = 5));
+        $table->addColumn($col2 =new Column\IntegerColumn($name2 = 'c2'));
 
         $subject = new AlterTableSQL();
         $sql     = $subject->addColumn($table, 0); // add it as the first column
@@ -34,8 +34,8 @@ class AlterTableSQLTest extends \PHPUnit_Framework_TestCase
     public function testModifyColumn()
     {
         $table = new Table('one');
-        $table->addColumn($col1 =new Column\Integer($name = 'c1', $desc = 'my desc', false, $size = 'medium', $digits = 5));
-        $col2 =new Column\Integer($name);
+        $table->addColumn($col1 =new Column\IntegerColumn($name = 'c1', $desc = 'my desc', false, $size = 'medium', $digits = 5));
+        $col2 =new Column\IntegerColumn($name);
 
         $subject = new AlterTableSQL();
         $sql     = $subject->modifyColumn($table, $col1, $col2);
@@ -47,10 +47,10 @@ class AlterTableSQLTest extends \PHPUnit_Framework_TestCase
     public function testDeleteColumnsBetween()
     {
         $table = new Table('one');
-        $table->addColumn(new Column\Integer($col1 = 'c1'));
-        $table->addColumn(new Column\Integer($col2 = 'c2'));
-        $table->addColumn(new Column\Integer($col3 = 'c3'));
-        $table->addColumn(new Column\Integer($col4 = 'c4'));
+        $table->addColumn(new Column\IntegerColumn($col1 = 'c1'));
+        $table->addColumn(new Column\IntegerColumn($col2 = 'c2'));
+        $table->addColumn(new Column\IntegerColumn($col3 = 'c3'));
+        $table->addColumn(new Column\IntegerColumn($col4 = 'c4'));
 
         $subject = new AlterTableSQL();
         $sql     = $subject->deleteColumnsBetween(1, 3, $table); // the middle two columns
@@ -89,11 +89,11 @@ class AlterTableSQLTest extends \PHPUnit_Framework_TestCase
     {
         // same columns in same order
         $master = new Table('the_table');
-        $master->addColumn(new Column\Integer($col1 = 'c1', $desc1 = 'my desc'));
-        $master->addColumn(new Column\Integer($col2 = 'c2', $desc2 = 'other desc'));
+        $master->addColumn(new Column\IntegerColumn($col1 = 'c1', $desc1 = 'my desc'));
+        $master->addColumn(new Column\IntegerColumn($col2 = 'c2', $desc2 = 'other desc'));
         $copy = new Table('the_table');
-        $copy->addColumn(new Column\Integer($col1, $desc1));
-        $copy->addColumn(new Column\Integer($col2, $desc2));
+        $copy->addColumn(new Column\IntegerColumn($col1, $desc1));
+        $copy->addColumn(new Column\IntegerColumn($col2, $desc2));
         $subject = new AlterTableSQL();
         $this->assertEmpty($subject->compareTableColumns($master, $copy));
     }
@@ -102,12 +102,12 @@ class AlterTableSQLTest extends \PHPUnit_Framework_TestCase
     public function testCompareTableColumnsAddOneAtStart()
     {
         $master = new Table('the_table');
-        $master->addColumn(new Column\Integer($col1 = 'c1', $desc1 = 'my desc'));
-        $master->addColumn(new Column\Integer($col2 = 'c2', $desc2 = 'other desc'));
-        $master->addColumn(new Column\Integer($col3 = 'c3', $desc3 = 'other desc 3'));
+        $master->addColumn(new Column\IntegerColumn($col1 = 'c1', $desc1 = 'my desc'));
+        $master->addColumn(new Column\IntegerColumn($col2 = 'c2', $desc2 = 'other desc'));
+        $master->addColumn(new Column\IntegerColumn($col3 = 'c3', $desc3 = 'other desc 3'));
         $copy = new Table('the_table');
-        $copy->addColumn(new Column\Integer($col2, $desc2));
-        $copy->addColumn(new Column\Integer($col3, $desc3));
+        $copy->addColumn(new Column\IntegerColumn($col2, $desc2));
+        $copy->addColumn(new Column\IntegerColumn($col3, $desc3));
         $subject = new AlterTableSQL();
         $sql = $subject->compareTableColumns($master, $copy);
         $this->assertEquals(1, count($sql));
@@ -119,12 +119,12 @@ class AlterTableSQLTest extends \PHPUnit_Framework_TestCase
     public function testCompareTableColumnsInsertOne()
     {
         $master = new Table('the_table');
-        $master->addColumn(new Column\Integer($col1 = 'c1', $desc1 = 'my desc'));
-        $master->addColumn(new Column\Integer($col2 = 'c2', $desc2 = 'other desc'));
-        $master->addColumn(new Column\Integer($col3 = 'c3', $desc3 = 'other desc 3'));
+        $master->addColumn(new Column\IntegerColumn($col1 = 'c1', $desc1 = 'my desc'));
+        $master->addColumn(new Column\IntegerColumn($col2 = 'c2', $desc2 = 'other desc'));
+        $master->addColumn(new Column\IntegerColumn($col3 = 'c3', $desc3 = 'other desc 3'));
         $copy = new Table('the_table');
-        $copy->addColumn(new Column\Integer($col1, $desc1));
-        $copy->addColumn(new Column\Integer($col3, $desc3));
+        $copy->addColumn(new Column\IntegerColumn($col1, $desc1));
+        $copy->addColumn(new Column\IntegerColumn($col3, $desc3));
         $subject = new AlterTableSQL();
         $sql = $subject->compareTableColumns($master, $copy);
         $this->assertEquals(1, count($sql));
@@ -136,11 +136,11 @@ class AlterTableSQLTest extends \PHPUnit_Framework_TestCase
     public function testCompareTableColumnsDeleteTwo()
     {
         $copy = new Table('the_table');
-        $copy->addColumn(new Column\Integer($col1 = 'c1', $desc1 = 'my desc'));
-        $copy->addColumn(new Column\Integer($col2 = 'c2', $desc2 = 'other desc'));
-        $copy->addColumn(new Column\Integer($col3 = 'c3', $desc3 = 'other desc 3'));
+        $copy->addColumn(new Column\IntegerColumn($col1 = 'c1', $desc1 = 'my desc'));
+        $copy->addColumn(new Column\IntegerColumn($col2 = 'c2', $desc2 = 'other desc'));
+        $copy->addColumn(new Column\IntegerColumn($col3 = 'c3', $desc3 = 'other desc 3'));
         $master = new Table('the_table');
-        $master->addColumn(new Column\Integer($col3, $desc3));
+        $master->addColumn(new Column\IntegerColumn($col3, $desc3));
         $subject = new AlterTableSQL();
         $sql = $subject->compareTableColumns($master, $copy);
         $this->assertEquals(2, count($sql));
@@ -152,12 +152,12 @@ class AlterTableSQLTest extends \PHPUnit_Framework_TestCase
     public function testCompareTableColumnsAddOneAtEnd()
     {
         $master = new Table('the_table');
-        $master->addColumn(new Column\Integer($col1 = 'c1', $desc1 = 'my desc'));
-        $master->addColumn(new Column\Integer($col2 = 'c2', $desc2 = 'other desc'));
-        $master->addColumn(new Column\Integer($col3 = 'c3', $desc3 = 'other desc 3'));
+        $master->addColumn(new Column\IntegerColumn($col1 = 'c1', $desc1 = 'my desc'));
+        $master->addColumn(new Column\IntegerColumn($col2 = 'c2', $desc2 = 'other desc'));
+        $master->addColumn(new Column\IntegerColumn($col3 = 'c3', $desc3 = 'other desc 3'));
         $copy = new Table('the_table');
-        $copy->addColumn(new Column\Integer($col1, $desc1));
-        $copy->addColumn(new Column\Integer($col2, $desc2));
+        $copy->addColumn(new Column\IntegerColumn($col1, $desc1));
+        $copy->addColumn(new Column\IntegerColumn($col2, $desc2));
         $subject = new AlterTableSQL();
         $sql = $subject->compareTableColumns($master, $copy);
         $this->assertEquals(1, count($sql));
@@ -169,20 +169,20 @@ class AlterTableSQLTest extends \PHPUnit_Framework_TestCase
     public function testCompareTableColumnsBigMessyChanges()
     {
         $copy = new Table('the_table');
-        $copy->addColumn(new Column\PrimaryKey($col1 = 'id', $desc1 = 'the key'));
-        $copy->addColumn(new Column\String($col2 = 'c2', $desc2 = 'column 2'));
-        $copy->addColumn(new Column\Integer($col3 = 'c3', $desc3 = 'desc3'));
-        $copy->addColumn(new Column\Integer($col4 = 'c4', $desc4 = 'desc4'));
-        $copy->addColumn(new Column\Float($col5 = 'c5', $desc5 = 'desc5'));
+        $copy->addColumn(new Column\PrimaryKeyColumn($col1 = 'id', $desc1 = 'the key'));
+        $copy->addColumn(new Column\StringColumn($col2 = 'c2', $desc2 = 'column 2'));
+        $copy->addColumn(new Column\IntegerColumn($col3 = 'c3', $desc3 = 'desc3'));
+        $copy->addColumn(new Column\IntegerColumn($col4 = 'c4', $desc4 = 'desc4'));
+        $copy->addColumn(new Column\FloatColumn($col5 = 'c5', $desc5 = 'desc5'));
 
         $master = new Table('the_table');
-        $master->addColumn(new Column\PrimaryKey($col1, $desc1new = 'the new key')); // change desc
+        $master->addColumn(new Column\PrimaryKeyColumn($col1, $desc1new = 'the new key')); // change desc
         // c2 deleted
-        $master->addColumn(new Column\Integer($col3, $desc3)); // no change
-        $master->addColumn(new Column\Integer($col3a = 'foobar', 'baz')); // inserted
+        $master->addColumn(new Column\IntegerColumn($col3, $desc3)); // no change
+        $master->addColumn(new Column\IntegerColumn($col3a = 'foobar', 'baz')); // inserted
         // c4 deleted
-        $master->addColumn(new Column\String($col5, $desc5)); // change type
-        $master->addColumn(new Column\String($col6 = 'c6')); // new column at end
+        $master->addColumn(new Column\StringColumn($col5, $desc5)); // change type
+        $master->addColumn(new Column\StringColumn($col6 = 'c6')); // new column at end
 
         $subject = new AlterTableSQL();
         $sql = $subject->compareTableColumns($master, $copy);
@@ -204,10 +204,10 @@ class AlterTableSQLTest extends \PHPUnit_Framework_TestCase
     public function testRender()
     {
         $masterOne = new Table('one', 'my comment');
-        $masterOne->addColumn(new Column\PrimaryKey($col1_1 = 'id', $desc1_1 = 'the key'));
+        $masterOne->addColumn(new Column\PrimaryKeyColumn($col1_1 = 'id', $desc1_1 = 'the key'));
         $masterTwo = new Table('two');
-        $masterTwo->addColumn(new Column\PrimaryKey($col2_1 = 'id', $desc2_1 = 'the key'));
-        $masterTwo->addColumn(new Column\String($col2_2 = 'c2', $desc2_2 = 'column 2'));
+        $masterTwo->addColumn(new Column\PrimaryKeyColumn($col2_1 = 'id', $desc2_1 = 'the key'));
+        $masterTwo->addColumn(new Column\StringColumn($col2_2 = 'c2', $desc2_2 = 'column 2'));
         $masterTwo->addIndex(new Index\Unique($col2_2));
         $master = new Schema();
         $master->add($masterOne);
@@ -215,12 +215,12 @@ class AlterTableSQLTest extends \PHPUnit_Framework_TestCase
 
         // table one is missing
         $copyTwo = new Table('two');
-        $copyTwo->addColumn(new Column\PrimaryKey($col2_1, $desc2_1));
-        $copyTwo->addColumn(new Column\String($col2_2 = 'c2', $desc2_2 = 'desc changed')); // description changed
+        $copyTwo->addColumn(new Column\PrimaryKeyColumn($col2_1, $desc2_1));
+        $copyTwo->addColumn(new Column\StringColumn($col2_2 = 'c2', $desc2_2 = 'desc changed')); // description changed
         // index is missing
         // table three is extra and must be deleted
         $copyThree = new Table('three');
-        $copyThree->addColumn(new Column\PrimaryKey($col3_1 = 'id', $desc3_1 = 'the key'));
+        $copyThree->addColumn(new Column\PrimaryKeyColumn($col3_1 = 'id', $desc3_1 = 'the key'));
         $copy = new Schema();
         $copy->add($copyTwo);
         $copy->add($copyThree);

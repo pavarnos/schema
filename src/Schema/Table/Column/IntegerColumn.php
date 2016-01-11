@@ -12,28 +12,34 @@ use LSS\Schema\Table\Column;
 
 /**
  */
-class Text extends Column
+class IntegerColumn extends Column
 {
+    const DEFAULT_DIGITS = 9;
+
     /** @var string  */
     private $size = ''; // tiny, medium, '' etc
 
+    /** @var int  */
+    private $digits = self::DEFAULT_DIGITS;
 
-    public function __construct($name, $description = '', $allowNull = false, $size = '')
+
+    public function __construct($name, $description = '', $allowNull = false, $size = '', $digits = self::DEFAULT_DIGITS)
     {
         $this->size = $size;
+        $this->digits = $digits;
         parent::__construct($name, $description, $allowNull);
     }
 
 
     public function getSQLType()
     {
-        return $this->size . 'text';
+        return $this->size . 'int(' . $this->digits . ')';
     }
 
 
     public function getSQLDefault()
     {
-        return 'default \'\'';
+        return 'default \'0\'';
     }
 
 
@@ -43,5 +49,13 @@ class Text extends Column
     public function getSize()
     {
         return $this->size;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDigits()
+    {
+        return $this->digits;
     }
 }

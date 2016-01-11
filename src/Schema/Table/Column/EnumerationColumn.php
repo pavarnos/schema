@@ -13,7 +13,7 @@ use LSS\Schema;
 
 /**
  */
-class Enumeration extends Column
+class EnumerationColumn extends Column
 {
     /** @var array string */
     private $values = [ ];

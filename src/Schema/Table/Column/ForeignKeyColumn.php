@@ -13,7 +13,7 @@ use LSS\Schema\Table\Column;
 /**
  *
  */
-class ForeignKey extends Integer
+class ForeignKeyColumn extends IntegerColumn
 {
     const DEFAULT_SIZE = 'medium';
     const DEFAULT_DIGITS = 9;

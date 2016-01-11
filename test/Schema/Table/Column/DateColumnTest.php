@@ -9,13 +9,13 @@ namespace LSS\Schema\Table\Column;
 
 use LSS\Schema;
 
-class StringTest extends \PHPUnit_Framework_TestCase
+class DateColumnTest extends \PHPUnit_Framework_TestCase
 {
     public function testConstructor()
     {
-        $subject = new String($name = 'abc', $desc = 'def', false, $length = 19);
+        $subject = new DateColumn($name = 'abc', $desc = 'def');
         $this->assertEquals($name, $subject->getName());
         $this->assertEquals($desc, $subject->getDescription());
-        $this->assertEquals(Schema::quoteIdentifier($name) . ' varchar(' . $length . ') not null default \'\' comment ' . Schema::QUOTE . $desc . Schema::QUOTE, $subject->toSQL());
+        $this->assertEquals(Schema::quoteIdentifier($name) . ' date not null default \'0000-00-00\' comment ' . Schema::QUOTE . $desc . Schema::QUOTE, $subject->toSQL());
     }
 }

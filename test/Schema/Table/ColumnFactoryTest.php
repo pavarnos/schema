@@ -8,7 +8,7 @@
 namespace LSS\Schema\Table;
 
 use LSS\Schema;
-use LSS\Schema\Table\Column\Enumeration;
+use LSS\Schema\Table\Column\EnumerationColumn;
 
 class ColumnFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,9 +16,9 @@ class ColumnFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $text = "enum('Boolean','Integer','Decimal','Select','Currency','FreeText','HTML') NOT NULL DEFAULT 'Boolean'";
         $subject = new ColumnFactory();
-        /** @var Enumeration $column */
+        /** @var EnumerationColumn $column */
         $column = $subject->create('aaa', 'bbb', $text);
-        $this->assertInstanceOf('LSS\Schema\Table\Column\Enumeration', $column);
+        $this->assertInstanceOf('LSS\Schema\Table\Column\EnumerationColumn', $column);
         $values = ['Boolean','Integer','Decimal','Select','Currency','FreeText','HTML'];
         $values = array_combine($values, $values);
         $this->assertEquals($values, $column->getValues());

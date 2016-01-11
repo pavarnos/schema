@@ -12,7 +12,7 @@ use LSS\Schema\Table\Column;
 
 /**
  */
-class Float extends Column
+class FloatColumn extends Column
 {
     const DEFAULT_WIDTH = 9;
     const DEFAULT_DECIMAL_PLACES = 2;

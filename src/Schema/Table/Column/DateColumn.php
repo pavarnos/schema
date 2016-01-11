@@ -12,7 +12,7 @@ use LSS\Schema\Table\Column;
 
 /**
  */
-class DateTime extends Column
+class DateColumn extends Column
 {
     public function __construct($name, $description = '', $allowNull = false)
     {
@@ -22,12 +22,12 @@ class DateTime extends Column
 
     public function getSQLType()
     {
-        return 'datetime';
+        return 'date';
     }
 
 
     public function getSQLDefault()
     {
-        return 'default \'0000-00-00 00:00:00\'';
+        return 'default \'0000-00-00\'';
     }
 }

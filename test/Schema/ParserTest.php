@@ -53,7 +53,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
         $sql = "
           `Name` varchar(40) not null default '' comment 'hi there',
           `Description` mediumtext not null,
-          `MyBoolean` tinyint(4) not null default \'0\'";
+          `MyBoolean` tinyint(4) not null default '0'";
 
         $subject = new Parser();
         $table = new Table( 'x' );
@@ -63,19 +63,19 @@ class ParserTest extends \PHPUnit_Framework_TestCase
         $one = $table->getColumnByName('Name');
         $this->assertEquals('Name', $one->getName());
         $this->assertEquals('hi there', $one->getDescription());
-        $this->assertInstanceOf('LSS\Schema\Table\Column\String', $one);
+        $this->assertInstanceOf('LSS\Schema\Table\Column\StringColumn', $one);
         $this->assertEquals(40, $one->getLength());
 
         $two = $table->getColumnByName('Description');
         $this->assertEquals('Description', $two->getName());
         $this->assertEquals('', $two->getDescription());
-        $this->assertInstanceOf('LSS\Schema\Table\Column\Text', $two);
+        $this->assertInstanceOf('LSS\Schema\Table\Column\TextColumn', $two);
         $this->assertEquals('medium', $two->getSize());
 
         $three = $table->getColumnByName('MyBoolean');
         $this->assertEquals('MyBoolean', $three->getName());
         $this->assertEquals('', $three->getDescription());
-        $this->assertInstanceOf('LSS\Schema\Table\Column\Boolean', $three);
+        $this->assertInstanceOf('LSS\Schema\Table\Column\BooleanColumn', $three);
         $this->assertEquals('tiny', $three->getSize());
         $this->assertEquals(4, $three->getDigits());
     }

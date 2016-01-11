@@ -9,18 +9,18 @@ namespace LSS\Schema\Table\Column;
 
 use LSS\Schema;
 
-class ForeignKeyTest extends \PHPUnit_Framework_TestCase
+class ForeignKeyColumnTest extends \PHPUnit_Framework_TestCase
 {
     public function testConstructor()
     {
         $this->setExpectedException('InvalidArgumentException');
-        $subject = new ForeignKey($name = 'abc', $desc = 'def');
+        $subject = new ForeignKeyColumn($name = 'abc', $desc = 'def');
     }
 
 
     public function testConstructorRelatedInDescription()
     {
-        $subject = new ForeignKey($name = 'abc', $desc = ForeignKey::RELATED_TEXT . ' other_table');
+        $subject = new ForeignKeyColumn($name = 'abc', $desc = ForeignKeyColumn::RELATED_TEXT . ' other_table');
         $this->assertEquals($name, $subject->getName());
         $this->assertEquals($desc, $subject->getDescription());
         $this->assertEquals('other_table', $subject->getOtherTable());
@@ -30,7 +30,7 @@ class ForeignKeyTest extends \PHPUnit_Framework_TestCase
 
     public function testConstructorRelatedAsParameter()
     {
-        $subject = new ForeignKey($name = 'abc', '', false, $size = 'long', $digits = 12, $other = 'my_other_table');
+        $subject = new ForeignKeyColumn($name = 'abc', '', false, $size = 'long', $digits = 12, $other = 'my_other_table');
         $this->assertEquals($name, $subject->getName());
         $this->assertEquals($desc = $subject::RELATED_TEXT . ' ' . $other, $subject->getDescription());
         $this->assertEquals($other, $subject->getOtherTable());

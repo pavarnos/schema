@@ -10,7 +10,7 @@ namespace LSS\Schema\Table\Column;
 
 /**
  */
-class Boolean extends Integer
+class BooleanColumn extends IntegerColumn
 {
     const BOOLEAN_SIZE = 'tiny';
     const BOOLEAN_DIGITS = 4;

@@ -10,7 +10,7 @@ namespace LSS\Schema\Table\Column;
 
 /**
  */
-class Set extends Enumeration
+class SetColumn extends EnumerationColumn
 {
     protected $type = 'set';
 }
