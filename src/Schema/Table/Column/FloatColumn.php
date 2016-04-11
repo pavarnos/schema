@@ -17,7 +17,7 @@ class FloatColumn extends Column
     const DEFAULT_WIDTH = 9;
     const DEFAULT_DECIMAL_PLACES = 2;
 
-    /** @var int  */
+    /** @var int precision */
     private $width = self::DEFAULT_WIDTH;
 
     /** @var int  */
@@ -41,5 +41,22 @@ class FloatColumn extends Column
     public function getSQLDefault()
     {
         return 'default \'0\'';
+    }
+
+    /**
+     * the precision
+     * @return int
+     */
+    public function getWidth()
+    {
+        return $this->width;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDecimalPlaces()
+    {
+        return $this->decimalPlaces;
     }
 }
