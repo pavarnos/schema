@@ -24,7 +24,7 @@ class ForeignKeyColumnTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($name, $subject->getName());
         $this->assertEquals($desc, $subject->getDescription());
         $this->assertEquals('other_table', $subject->getOtherTable());
-        $this->assertEquals(Schema::quoteIdentifier($name) . ' ' . $subject::DEFAULT_SIZE . 'int(' . $subject::DEFAULT_DIGITS . ') not null comment ' . Schema::QUOTE . $desc . Schema::QUOTE, $subject->toSQL());
+        $this->assertEquals(Schema::quoteIdentifier($name) . ' ' . $subject::DEFAULT_SIZE . 'int(' . $subject::DEFAULT_DIGITS . ') not null default \'0\' comment ' . Schema::QUOTE . $desc . Schema::QUOTE, $subject->toSQL());
     }
 
 
@@ -34,6 +34,6 @@ class ForeignKeyColumnTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($name, $subject->getName());
         $this->assertEquals($desc = $subject::RELATED_TEXT . ' ' . $other, $subject->getDescription());
         $this->assertEquals($other, $subject->getOtherTable());
-        $this->assertEquals(Schema::quoteIdentifier($name) . ' ' . $size . 'int(' . $digits . ') not null comment ' . Schema::QUOTE . $desc . Schema::QUOTE, $subject->toSQL());
+        $this->assertEquals(Schema::quoteIdentifier($name) . ' ' . $size . 'int(' . $digits . ') not null default \'0\' comment ' . Schema::QUOTE . $desc . Schema::QUOTE, $subject->toSQL());
     }
 }

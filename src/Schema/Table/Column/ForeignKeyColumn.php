@@ -46,17 +46,17 @@ class ForeignKeyColumn extends IntegerColumn
     }
 
 
-    public function getSQLType()
-    {
-        return parent::getSQLType();
-    }
+//    public function getSQLType()
+//    {
+//        return parent::getSQLType();
+//    }
+//
 
-
-    public function getSQLDefault()
-    {
-        return '';
-    }
-
+//    public function getSQLDefault()
+//    {
+//        return '';
+//    }
+//
 
     /**
      * @return string
