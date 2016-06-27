@@ -8,12 +8,15 @@
 namespace LSS\Schema\Table;
 
 use LSS\Schema;
+use LSS\Schema\Tagable;
 
 /**
  * Class Column
  */
 abstract class Column
 {
+    use Tagable;
+
     /** @var string */
     private $name;
 

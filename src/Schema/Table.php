@@ -17,6 +17,8 @@ use LSS\Schema\Table\Index;
  */
 class Table implements \IteratorAggregate
 {
+    use Tagable;
+
     /** @var string name of table (must be a valid SQL identifier) */
     private $name;
 
