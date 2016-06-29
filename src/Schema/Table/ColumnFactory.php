@@ -18,6 +18,7 @@ class ColumnFactory
         'tinyint\(([\d]+)\)'                              => '\LSS\Schema\Table\Column\BooleanColumn',
         '([a-z]*)int\(([\d]+)\)'                         => '\LSS\Schema\Table\Column\IntegerColumn',
         '([a-z]*)text'                                   => '\LSS\Schema\Table\Column\TextColumn',
+        'json'                                            => '\LSS\Schema\Table\Column\JsonColumn',
         'datetime'                                        => '\LSS\Schema\Table\Column\DateTimeColumn',
         'date'                                            => '\LSS\Schema\Table\Column\DateColumn',
         'varchar\s*\((\d+)\)'                             => '\LSS\Schema\Table\Column\StringColumn',
