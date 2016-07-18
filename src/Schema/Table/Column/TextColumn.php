@@ -33,6 +33,9 @@ class TextColumn extends Column
 
     public function getSQLDefault()
     {
+        if ($this->isAllowedNull()) {
+            return 'default null';
+        }
         return 'default \'\'';
     }
 

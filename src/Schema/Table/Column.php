@@ -61,6 +61,13 @@ abstract class Column
         return $this->description;
     }
 
+    /**
+     * @return bool
+     */
+    public function isAllowedNull()
+    {
+        return $this->allowNull;
+    }
 
     /**
      * @return string
@@ -73,7 +80,7 @@ abstract class Column
      */
     public function getNullSQL()
     {
-        return ($this->allowNull ? '' : ' not null');
+        return ($this->allowNull ? ' null' : ' not null');
     }
 
 
@@ -89,9 +96,7 @@ abstract class Column
     public function toSQL()
     {
         $sql = Schema::quoteIdentifier($this->getName()) . ' ' . $this->getSQLType();
-        if (!$this->allowNull) {
-            $sql .= ' not null';
-        }
+        $sql .= $this->getNullSQL();
         $default = $this->getSQLDefault();
         if (!empty($default)) {
             $sql .= ' ' . $default;
