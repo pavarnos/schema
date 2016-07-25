@@ -142,6 +142,16 @@ class Table implements \IteratorAggregate
 
 
     /**
+     * @param string $columnName
+     * @return boolean
+     */
+    public function hasColumn($columnName)
+    {
+        return isset($this->column[$columnName]);
+    }
+
+
+    /**
      * @param Index $index
      * @return $this
      */

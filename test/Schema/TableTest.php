@@ -31,7 +31,8 @@ class TableTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($column, $subject->getColumnByName($colName));
         $this->assertEquals($column, $subject->getColumnNumber(0));
         $this->assertEquals(1, $subject->getColumnCount());
-
+        $this->assertTrue($subject->hasColumn($colName));
+        $this->assertFalse($subject->hasColumn('non_existent_column'));
 
         $column2 = new StringColumn($colName2 = 'ghi2', $colDesc2 = 'jkl2');
         $subject->addColumn($column2);
