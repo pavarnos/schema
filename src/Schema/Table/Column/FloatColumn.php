@@ -37,10 +37,14 @@ class FloatColumn extends Column
         return 'decimal(' . $this->width . ',' . $this->decimalPlaces . ')';
     }
 
+    public function getDefaultValue()
+    {
+        return 0;
+    }
 
     public function getSQLDefault()
     {
-        return 'default \'0\'';
+        return 'default \'' . $this->getDefaultValue() . '\'';
     }
 
     /**

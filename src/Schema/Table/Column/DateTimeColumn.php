@@ -9,7 +9,6 @@ namespace LSS\Schema\Table\Column;
 
 use LSS\Schema\Table\Column;
 
-
 /**
  */
 class DateTimeColumn extends Column
@@ -19,15 +18,18 @@ class DateTimeColumn extends Column
         parent::__construct($name, $description, $allowNull);
     }
 
-
     public function getSQLType()
     {
         return 'datetime';
     }
 
+    public function getDefaultValue()
+    {
+        return '0000-00-00 00:00:00';
+    }
 
     public function getSQLDefault()
     {
-        return 'default \'0000-00-00 00:00:00\'';
+        return 'default \'' . $this->getDefaultValue() . '\'';
     }
 }

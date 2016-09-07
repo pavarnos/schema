@@ -7,9 +7,6 @@
 
 namespace LSS\Schema\Table\Column;
 
-use LSS\Schema\Table\Column;
-
-
 /**
  *
  */
@@ -21,7 +18,6 @@ class ForeignKeyColumn extends IntegerColumn
 
     /** @var string name of foreign table */
     private $otherTable;
-
 
     public function __construct(
         $name,
@@ -43,6 +39,11 @@ class ForeignKeyColumn extends IntegerColumn
         }
         $this->otherTable = $otherTable;
         parent::__construct($name, $description, $allowNull, $size, $digits);
+    }
+
+    public function getDefaultValue()
+    {
+        return 0;
     }
 
 

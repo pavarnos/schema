@@ -92,6 +92,14 @@ abstract class Column
         return '';
     }
 
+    /**
+     * the column value to use if the column is not nullable and needs a default value
+     * @return string
+     */
+    public function getDefaultValue()
+    {
+        return '';
+    }
 
     public function toSQL()
     {

@@ -21,4 +21,9 @@ class BooleanColumn extends IntegerColumn
         $allowNull = false;
         parent::__construct($name, $description, $allowNull, self::BOOLEAN_SIZE, $digits);
     }
+
+    public function getDefaultValue()
+    {
+        return 0;
+    }
 }
