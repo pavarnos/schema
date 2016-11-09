@@ -26,7 +26,7 @@ use LSS\Schema\Table;
  *   }
  *
  */
-class Schema implements \IteratorAggregate
+class Schema implements \IteratorAggregate, SchemaInterface
 {
     const BACKTICK = '`';
     const QUOTE = "'";
@@ -68,6 +68,16 @@ class Schema implements \IteratorAggregate
         }
 
         return $this->table[$name];
+    }
+
+
+    /**
+     * @brief return the full set of tables
+     * @return Table[] keyed on table name
+     */
+    public function getTables()
+    {
+        return $this->table;
     }
 
 

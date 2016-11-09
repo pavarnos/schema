@@ -15,7 +15,7 @@ use LSS\Schema\Table\Index;
  * Class Table
  * @package LSS\Schema
  */
-class Table implements \IteratorAggregate
+class Table implements \IteratorAggregate, TableInterface
 {
     use Tagable;
 
@@ -69,7 +69,7 @@ class Table implements \IteratorAggregate
 
 
     /**
-     * implements array iteration over tables
+     * implements array iteration over columns
      * @return \ArrayIterator
      */
     public function getIterator()
@@ -152,6 +152,16 @@ class Table implements \IteratorAggregate
 
 
     /**
+     * implements array iteration over tables
+     * @return Column[] keyed by name
+     */
+    public function getColumns()
+    {
+        return $this->column;
+    }
+
+
+    /**
      * @param Index $index
      * @return $this
      */
@@ -165,7 +175,7 @@ class Table implements \IteratorAggregate
 
     /**
      * @param string $name
-     * @return Column
+     * @return Index
      */
     public function getIndexByName($name)
     {
@@ -192,6 +202,15 @@ class Table implements \IteratorAggregate
     public function getIndexNames()
     {
         return array_keys($this->index);
+    }
+
+
+    /**
+     * @return Index[] keyed by name
+     */
+    public function getIndexes()
+    {
+        return $this->index;
     }
 
 
