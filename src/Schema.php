@@ -8,6 +8,7 @@
 namespace LSS;
 
 use LSS\Schema\Table;
+use LSS\Schema\TableInterface;
 
 /**
  * Models an SQL database in memory. Used to hold the parsed results of
@@ -31,16 +32,16 @@ class Schema implements \IteratorAggregate, SchemaInterface
     const BACKTICK = '`';
     const QUOTE = "'";
 
-    /** @var Table[] */
+    /** @var TableInterface[] */
     private $table = [ ];
 
 
     /**
      * Add a new table to the database
-     * @param Table $table
-     * @return Table
+     * @param TableInterface $table
+     * @return TableInterface
      */
-    public function add(Table $table)
+    public function add(TableInterface $table)
     {
         return $this->table[$table->getName()] = $table;
     }
@@ -59,7 +60,7 @@ class Schema implements \IteratorAggregate, SchemaInterface
     /**
      * @brief return the table
      * @param string $name of the table to return
-     * @return Table table in the database
+     * @return TableInterface table in the database
      */
     public function getTable($name)
     {
@@ -73,7 +74,7 @@ class Schema implements \IteratorAggregate, SchemaInterface
 
     /**
      * @brief return the full set of tables
-     * @return Table[] keyed on table name
+     * @return TableInterface[] keyed on table name
      */
     public function getTables()
     {

@@ -7,9 +7,10 @@
 
 namespace LSS\Schema\Renderer;
 
-use LSS\Schema\Table;
 use LSS\Schema\Table\Column;
 use LSS\Schema;
+use LSS\Schema\TableInterface;
+use LSS\SchemaInterface;
 
 /**
  * Class AlterTableSQL
@@ -36,11 +37,11 @@ class AlterTableSQL
 
     /**
      * return a set of sql statements that turn $copy into $master
-     * @param Schema $master
-     * @param Schema $copy
+     * @param SchemaInterface $master
+     * @param SchemaInterface $copy
      * @return string[] sql statements to execute
      */
-    public function render(Schema $master, Schema $copy)
+    public function render(SchemaInterface $master, SchemaInterface $copy)
     {
         $sql = array();
 
@@ -72,11 +73,11 @@ class AlterTableSQL
     /**
      * Compare the two sets of columns in $master and $copy
      *
-     * @param Table $master
-     * @param Table $copy
+     * @param TableInterface $master
+     * @param TableInterface $copy
      * @return string[] of sql alter table statements
      */
-    public function compareTableColumns(Table $master, Table $copy)
+    public function compareTableColumns(TableInterface $master, TableInterface $copy)
     {
         $masterColumnCount = $master->getColumnCount();
         $copyColumnCount   = $copy->getColumnCount();
@@ -116,11 +117,11 @@ class AlterTableSQL
 
     /**
      * add a new column to the table
-     * @param Table $master             provides new column names and column types
+     * @param TableInterface $master             provides new column names and column types
      * @param int   $masterColumnNumber number of new column to add
      * @return string sql ddl
      */
-    public function addColumn(Table $master, $masterColumnNumber)
+    public function addColumn(TableInterface $master, $masterColumnNumber)
     {
         $location = $masterColumnNumber <= 0 ? 'first' : ('after ' .
             Schema::quoteIdentifier($master->getColumnNumber($masterColumnNumber - 1)->getName()));
@@ -134,12 +135,12 @@ class AlterTableSQL
 
     /**
      * return SQL to change $copy into $master
-     * @param Table  $table
+     * @param TableInterface  $table
      * @param Column $master
      * @param Column $copy
      * @return string sql ddl
      */
-    public function modifyColumn(Table $table, Column $master, Column $copy)
+    public function modifyColumn(TableInterface $table, Column $master, Column $copy)
     {
         return 'alter table ' . Schema::quoteIdentifier($table->getName()) . ' change ' . Schema::quoteIdentifier($copy->getName()) . ' ' . $master->toSQL();
     }
@@ -149,10 +150,10 @@ class AlterTableSQL
      * return alter table sql to delete the selected columns
      * @param int   $start  starting column number to delete
      * @param int   $finish delete columns up to (but not including) this column number
-     * @param Table $copy   to delete columns from
+     * @param TableInterface $copy   to delete columns from
      * @return string sql ddl
      */
-    public function deleteColumnsBetween($start, $finish, Table $copy)
+    public function deleteColumnsBetween($start, $finish, TableInterface $copy)
     {
         $sql = array();
         for ($i = $start; $i < $finish; $i++) {
@@ -166,10 +167,10 @@ class AlterTableSQL
 
     /**
      * get the names of all the tables in $db
-     * @param Schema $db
+     * @param SchemaInterface $db
      * @return string[] table name
      */
-    public function getTableNames(Schema $db)
+    public function getTableNames(SchemaInterface $db)
     {
         return array_diff($db->getTableNames(), $this->ignoredTables);
     }
@@ -177,11 +178,11 @@ class AlterTableSQL
 
     /**
      * see which indexes need to be added / deleted.
-     * @param Table $master
-     * @param Table $copy
+     * @param TableInterface $master
+     * @param TableInterface $copy
      * @return string sql ddl
      */
-    public function upgradeIndexes(Table $master, Table $copy)
+    public function upgradeIndexes(TableInterface $master, TableInterface $copy)
     {
         $masterIndexes = $master->getIndexNames();
         $copyIndexes   = $copy->getIndexNames();
@@ -213,5 +214,4 @@ class AlterTableSQL
 
         return $sql;
     }
-
 }

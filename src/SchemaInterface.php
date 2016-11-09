@@ -6,7 +6,7 @@
  */
 namespace LSS;
 
-use LSS\Schema\Table;
+use LSS\Schema\TableInterface;
 
 /**
  * Models an SQL database in memory. Used to hold the parsed results of
@@ -29,10 +29,10 @@ interface SchemaInterface
 {
     /**
      * Add a new table to the database
-     * @param Table $table
-     * @return Table
+     * @param TableInterface $table
+     * @return TableInterface
      */
-    public function add(Table $table);
+    public function add(TableInterface $table);
 
     /**
      * return the number of tables added by add()
@@ -43,13 +43,13 @@ interface SchemaInterface
     /**
      * @brief return the table
      * @param string $name of the table to return
-     * @return Table table in the database
+     * @return TableInterface table in the database
      */
     public function getTable($name);
 
     /**
      * @brief return all the tables indexed by name
-     * @return Table[] table in the database
+     * @return TableInterface[] table in the database
      */
     public function getTables();
 

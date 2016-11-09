@@ -10,7 +10,7 @@ namespace LSS\Schema\Table;
 /**
  * Class ColumnFactory
  */
-class ColumnFactory
+class ColumnFactory implements ColumnFactoryInterface
 {
     // maps sql type regex to class names
     private $map = [

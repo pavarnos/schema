@@ -7,8 +7,7 @@
 
 namespace LSS\Schema\Renderer;
 
-use LSS\Schema;
-
+use LSS\SchemaInterface;
 
 /**
  * Take the Schema and return a digraph to render in graphviz
@@ -17,11 +16,11 @@ class GraphViz
 {
     /**
      *
-     * @param Schema $schema
+     * @param SchemaInterface $schema
      * @return string graphviz syntax
      */
-    public function render(Schema $schema)
+    public function render(SchemaInterface $schema)
     {
-
+        return '';
     }
 }

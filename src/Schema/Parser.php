@@ -8,9 +8,12 @@
 namespace LSS\Schema;
 
 use LSS\Schema\Table\ColumnFactory;
+use LSS\Schema\Table\ColumnFactoryInterface;
 use LSS\Schema\Table\Index;
 use LSS\Schema;
-
+use LSS\Schema\Table\TableFactory;
+use LSS\Schema\Table\TableFactoryInterface;
+use LSS\SchemaInterface;
 
 /**
  * Class Parser
@@ -21,32 +24,39 @@ class Parser
     /** @var array */
     private $ignoredTables = [ ];
 
-    /** @var ColumnFactory */
+    /** @var ColumnFactoryInterface */
     private $columnFactory;
+
+    /** @var TableFactoryInterface */
+    private $tableFactory;
 
 
     /**
      * @param array                $ignoreTables
-     * @param ColumnFactory | null $columnFactory
+     * @param ColumnFactoryInterface | null $columnFactory
      */
-    public function __construct($ignoreTables = [ ], $columnFactory = null)
+    public function __construct($ignoreTables = [ ], ColumnFactoryInterface $columnFactory = null, TableFactoryInterface $tableFactory = null)
     {
         $this->ignoredTables = $ignoreTables;
         if (empty($columnFactory)) {
             $columnFactory = new ColumnFactory();
         }
         $this->columnFactory = $columnFactory;
+        if (empty($tableFactory)) {
+            $tableFactory = new TableFactory();
+        }
+        $this->tableFactory = $tableFactory;
     }
 
 
     /**
      * Schema is a parameter so you can parse several snippets of sql incrementally
-     * @param Schema $schema where to add the parsed tables.
+     * @param SchemaInterface $schema where to add the parsed tables.
      * @param string $sql    string containing sql to be parsed: should be in format as produced by phpMyAdmin export
      *                       oops! what if an sql comment has a ; in it?
      *                       match end of line perhaps?
      */
-    public function parse(Schema $schema, $sql)
+    public function parse(SchemaInterface $schema, $sql)
     {
         $tables = preg_split('/;[\r\n]/ms', $sql, -1, PREG_SPLIT_NO_EMPTY);
         foreach ($tables as $tableSQL) {
@@ -66,7 +76,7 @@ class Parser
      * assumes each column is on its own line, with the CREATE TABLE and
      * table type info also on their own lines, as returned by MySQL
      * @param string $tableSql
-     * @return Table|null
+     * @return TableInterface |null
      * @throws \Exception
      */
     public function parseTable($tableSql)
@@ -81,7 +91,7 @@ class Parser
             return null;
         }
 
-        $table = new Table($name, $this->extractComment($matches[3]));
+        $table = $this->tableFactory->createTable($name, $this->extractComment($matches[3]));
         $this->parseColumns($table, $matches[2]);
         return $table;
     }
@@ -91,11 +101,11 @@ class Parser
      *
      * known limitation: one column per line: a \n is required between each column definition
      * known limitation: single field primary key
-     * @param Table  $table
+     * @param TableInterface  $table
      * @param string $columnText
-     * @return Table
+     * @return TableInterface
      */
-    public function parseColumns(Table $table, $columnText)
+    public function parseColumns(TableInterface $table, $columnText)
     {
         // remove stuff we don't want to parse or don't currently care about
         $columnText = preg_replace('/\s+default\s*\'\'/ims', '', $columnText);
