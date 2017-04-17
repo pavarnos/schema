@@ -9,7 +9,7 @@ namespace LSS\Schema;
 
 use LSS\Schema;
 
-class ParserTest extends \PHPUnit_Framework_TestCase
+class ParserTest extends \PHPUnit\Framework\TestCase
 {
     private $table1 =
         "CREATE TABLE config (

@@ -1,15 +1,22 @@
 {
     "name": "lss/schema",
     "description": "Simple PHP / MySQL schema sync / migration tool. Specify your schema in PHP and it will generate DDL and alter table statements to sync the database.",
-    "keywords": ["mysql", "schema", "database", "parser", "migration", "sync"],
+    "keywords": [
+        "mysql",
+        "schema",
+        "database",
+        "parser",
+        "migration",
+        "sync"
+    ],
     "type": "library",
     "version": "0.1",
     "license": "MIT",
     "authors": [
         {
-        "name": "Steve Pavarno",
-        "email": "steve@lightlysalted.co.nz",
-        "role": "Developer"
+            "name": "Steve Pavarno",
+            "email": "steve@lightlysalted.co.nz",
+            "role": "Developer"
         }
     ],
     "autoload": {
@@ -23,9 +30,13 @@
         }
     },
     "require": {
-        "php": ">=5.5.0"
+        "php": "^7.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~5.0"
+        "phpunit/phpunit": "^6",
+        "pds/skeleton": "^1.0"
+    },
+    "scripts": {
+        "test": "phpunit"
     }
 }

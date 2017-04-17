@@ -9,11 +9,11 @@ namespace LSS\Schema\Table\Column;
 
 use LSS\Schema;
 
-class ForeignKeyColumnTest extends \PHPUnit_Framework_TestCase
+class ForeignKeyColumnTest extends \PHPUnit\Framework\TestCase
 {
     public function testConstructor()
     {
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException(\InvalidArgumentException::class);
         $subject = new ForeignKeyColumn($name = 'abc', $desc = 'def');
     }
 

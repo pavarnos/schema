@@ -12,7 +12,7 @@ use LSS\Schema\Table;
 use LSS\Schema\Table\Column;
 use LSS\Schema\Table\Index;
 
-class AlterTableSQLTest extends \PHPUnit_Framework_TestCase
+class AlterTableSQLTest extends \PHPUnit\Framework\TestCase
 {
     public function testAddColumn()
     {
@@ -199,7 +199,7 @@ class AlterTableSQLTest extends \PHPUnit_Framework_TestCase
 
 
     /**
-     * the final big bang test of all above functionality
+     * the final big bang tests of all above functionality
      */
     public function testRender()
     {

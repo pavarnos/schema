@@ -9,7 +9,7 @@ namespace LSS\Schema\Table\Column;
 
 use LSS\Schema;
 
-class StringColumnTest extends \PHPUnit_Framework_TestCase
+class StringColumnTest extends \PHPUnit\Framework\TestCase
 {
     public function testConstructor()
     {

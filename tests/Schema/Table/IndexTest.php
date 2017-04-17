@@ -9,7 +9,7 @@ namespace LSS\Schema\Table;
 
 use LSS\Schema;
 
-class IndexTest extends \PHPUnit_Framework_TestCase
+class IndexTest extends \PHPUnit\Framework\TestCase
 {
     public function testConstructor()
     {

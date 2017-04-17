@@ -7,7 +7,6 @@
 
 namespace LSS;
 
-use LSS\Schema\Table;
 use LSS\Schema\TableInterface;
 
 /**

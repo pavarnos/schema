@@ -9,7 +9,7 @@ namespace LSS\Schema\Table\Column;
 
 use LSS\Schema;
 
-class EnumerationColumnTest extends \PHPUnit_Framework_TestCase
+class EnumerationColumnTest extends \PHPUnit\Framework\TestCase
 {
     public function testConstructorArray()
     {

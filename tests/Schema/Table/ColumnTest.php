@@ -9,7 +9,7 @@ namespace LSS\Schema\Table;
 
 use LSS\Schema;
 
-class ColumnTest extends \PHPUnit_Framework_TestCase
+class ColumnTest extends \PHPUnit\Framework\TestCase
 {
     const SQLTYPE = 'text';
 

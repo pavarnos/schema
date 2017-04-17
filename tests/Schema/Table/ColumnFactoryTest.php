@@ -10,7 +10,7 @@ namespace LSS\Schema\Table;
 use LSS\Schema;
 use LSS\Schema\Table\Column\EnumerationColumn;
 
-class ColumnFactoryTest extends \PHPUnit_Framework_TestCase
+class ColumnFactoryTest extends \PHPUnit\Framework\TestCase
 {
     public function testEnum()
     {

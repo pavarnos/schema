@@ -1,6 +1,6 @@
 Simple PHP and MySQL schema sync / migration tool.
 
-This is an ancient library i wrote in 2007 to allow me to have a database schema definition all in PHP
+This is based on an ancient library i wrote in 2007 to allow a database schema definition all in PHP
 and (at the click of a button) generate alter table statements to synch the mysql server with the PHP.
 This was handy for a number of sites that had a very limited number of users. It allowed
 
@@ -20,7 +20,7 @@ many years, fast / light, and I still use it in a few places.
 
 So here it is for me to pull in via composer and for you to maybe use if you feel like it. Recently updated to
 
-- use PHP 5.5 features
+- use PHP 7 features
 - PSR-4 autoloading
 - high level of unit test coverage
 - better separation of concerns (though I needed to maintain some compatibility with my old code so I didn't have to rewrite everything that used it).

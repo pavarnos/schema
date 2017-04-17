@@ -10,7 +10,7 @@ namespace LSS\Schema;
 use LSS\Schema\Table\Column\StringColumn;
 use LSS\Schema\Table\Index;
 
-class TableTest extends \PHPUnit_Framework_TestCase
+class TableTest extends \PHPUnit\Framework\TestCase
 {
     public function testConstructor()
     {
